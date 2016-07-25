@@ -29,7 +29,7 @@ public class UserRepositoryImpl implements UserRepository {
                         return Observable.from(usersList.getItems()).concatMap(new Func1<User, Observable<User>>() {
                             @Override
                             public Observable<User> call(User user) {
-                                return githubUserRestService.getUser(user.getName());
+                                return githubUserRestService.getUser(user.getLogin());
                             }
                         }).toList();
                     }

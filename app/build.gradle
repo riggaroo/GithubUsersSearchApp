@@ -31,15 +31,18 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha3'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.0-RC1'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
 
     //Retrofit, RxJava and OkHttp.
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:okhttp:3.4.0-RC1'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
     //Dependencies for JUNit and unit tests.
     testCompile "junit:junit:4.12"
@@ -49,9 +52,8 @@ dependencies {
     testCompile("org.powermock:powermock-api-mockito:1.6.2")
     testCompile 'com.squareup.okhttp3:mockwebserver:3.4.0-RC1'
 
-
     //Dependencies for Espresso
-    androidTestCompile 'com.android.support:appcompat-v7:24.0.0'
+    androidTestCompile 'com.android.support:appcompat-v7:24.1.1'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -68,7 +70,7 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2.1'){
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.1') {
         exclude module: 'recyclerview-v7'
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
@@ -76,4 +78,5 @@ dependencies {
     }
 
 
+    compile 'com.android.support:recyclerview-v7:24.1.1'
 }

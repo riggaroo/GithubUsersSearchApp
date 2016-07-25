@@ -8,13 +8,34 @@
     android:layout_height="match_parent"
     tools:context="za.co.riggaroo.gus.presentation.search.UserSearchActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_user_search"
+        app:layout_constraintRight_toRightOf="@+id/activity_user_search"
+        app:layout_constraintTop_toTopOf="@+id/activity_user_search">
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_users"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/activity_user_search"
         app:layout_constraintLeft_toLeftOf="@+id/activity_user_search"
         app:layout_constraintRight_toRightOf="@+id/activity_user_search"
-        app:layout_constraintTop_toTopOf="@+id/activity_user_search"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:listitem="@layout/list_item_users">
+
+    </android.support.v7.widget.RecyclerView>
+
 
 </android.support.constraint.ConstraintLayout>
