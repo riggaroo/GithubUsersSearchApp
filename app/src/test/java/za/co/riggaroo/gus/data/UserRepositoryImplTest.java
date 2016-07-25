@@ -44,16 +44,16 @@ public class UserRepositoryImplTest {
 
         List<List<User>> onNextEvents = subscriber.getOnNextEvents();
         List<User> users = onNextEvents.get(0);
-        Assert.assertEquals("riggaroo", users.get(0).getName());
-        Assert.assertEquals("rebecca", users.get(1).getName());
+        Assert.assertEquals("riggaroo", users.get(0).getLogin());
+        Assert.assertEquals("rebecca", users.get(1).getLogin());
     }
 
     private UsersList githubUserList() {
         User user = new User();
-        user.setName("riggaroo");
+        user.setLogin("riggaroo");
 
         User user2 = new User();
-        user2.setName("rebecca");
+        user2.setLogin("rebecca");
 
         List<User> githubUsers = new ArrayList<>();
         githubUsers.add(user);
@@ -65,7 +65,8 @@ public class UserRepositoryImplTest {
 
     private User user1FullDetails() {
         User user = new User();
-        user.setName("riggaroo");
+        user.setLogin("riggaroo");
+        user.setName("Rigs Franks");
         user.setAvatarUrl("avatar_url");
         user.setBio("Bio1");
         return user;
@@ -73,7 +74,8 @@ public class UserRepositoryImplTest {
 
     private User user2FullDetails() {
         User user = new User();
-        user.setName("rebecca");
+        user.setLogin("rebecca");
+        user.setName("Rebecca Franks");
         user.setAvatarUrl("avatar_url2");
         user.setBio("Bio2");
         return user;

@@ -15,10 +15,10 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/activity_user_search"
+        app:layout_constraintTop_toTopOf="@+id/activity_user_search"
         app:layout_constraintRight_toRightOf="@+id/activity_user_search"
-        app:layout_constraintTop_toTopOf="@+id/activity_user_search">
+        app:layout_constraintHorizontal_bias="0.0">
 
     </android.support.v7.widget.Toolbar>
 
@@ -26,16 +26,41 @@
         android:id="@+id/recycler_view_users"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
         android:clipToPadding="false"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_user_search"
+        tools:listitem="@layout/list_item_users"
         app:layout_constraintLeft_toLeftOf="@+id/activity_user_search"
-        app:layout_constraintRight_toRightOf="@+id/activity_user_search"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:listitem="@layout/list_item_users">
+        app:layout_constraintRight_toRightOf="@+id/activity_user_search"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_user_search"
+        android:layout_marginBottom="16dp">
 
     </android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_error_msg"
+        app:layout_constraintLeft_toLeftOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="@+id/recycler_view_users"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_view_users"
+        tools:text="No Data has loaded"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="@+id/recycler_view_users"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="@+id/recycler_view_users"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_user_search"
+        android:layout_marginBottom="16dp"/>
 
 </android.support.constraint.ConstraintLayout>

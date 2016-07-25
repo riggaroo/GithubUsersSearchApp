@@ -35,7 +35,12 @@ class UsersAdapter extends RecyclerView.Adapter<UserViewHolder> {
         User item = items.get(position);
 
         holder.textViewBio.setText(item.getBio());
-        holder.textViewName.setText(item.getName() + " (" + item.getLogin() + ")");
+        if (item.getName() != null) {
+            holder.textViewName.setText(item.getLogin() + " - " + item.getName());
+        } else {
+            holder.textViewName.setText(item.getLogin());
+
+        }
         Picasso.with(context).load(item.getAvatarUrl()).into(holder.imageViewAvatar);
     }
 
@@ -47,7 +52,7 @@ class UsersAdapter extends RecyclerView.Adapter<UserViewHolder> {
         return items.size();
     }
 
-    public void setItems(List<User> githubUserList) {
+    void setItems(List<User> githubUserList) {
         this.items = githubUserList;
         notifyDataSetChanged();
     }

@@ -21,6 +21,7 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
 
     @Override
     public void search(String term) {
+        getView().showLoading(true);
         addSubscription(userRepository.searchUsers(term).subscribeOn(ioScheduler).observeOn(mainScheduler).subscribe(new Subscriber<List<User>>() {
             @Override
             public void onCompleted() {
@@ -30,7 +31,7 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
             @Override
             public void onError(Throwable e) {
                 getView().showLoading(false);
-                getView().showError(e.getMessage()); //TODO You probably don't want this error to show to users
+                getView().showError(e.getMessage()); //TODO You probably don't want this error to show to users - Might want to show a friendlier message :)
             }
 
             @Override

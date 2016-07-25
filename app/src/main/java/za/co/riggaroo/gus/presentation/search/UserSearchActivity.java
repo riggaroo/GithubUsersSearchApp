@@ -9,6 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -26,6 +29,9 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
     private UsersAdapter usersAdapter;
     private SearchView searchView;
     private Toolbar toolbar;
+    private ProgressBar progressBar;
+    private RecyclerView recyclerViewUsers;
+    private TextView textViewErrorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +40,17 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         userSearchPresenter = new UserSearchPresenter(Injection.provideUserRepo(), Schedulers.io(), AndroidSchedulers.mainThread());
-
         userSearchPresenter.attachView(this);
-        RecyclerView recyclerViewUsers = (RecyclerView) findViewById(R.id.recycler_view_users);
+
+        recyclerViewUsers = (RecyclerView) findViewById(R.id.recycler_view_users);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-
         recyclerViewUsers.setLayoutManager(manager);
         usersAdapter = new UsersAdapter(null, this);
         recyclerViewUsers.setAdapter(usersAdapter);
+
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        textViewErrorMessage = (TextView) findViewById(R.id.text_view_error_msg);
     }
 
     @Override
@@ -84,17 +92,29 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
 
     @Override
     public void onSearchResultsLoaded(List<User> githubUserList) {
-        Log.d(TAG, "onSearchResultsLoaded() called with: githubUserList = [" + githubUserList + "]");
+        recyclerViewUsers.setVisibility(View.VISIBLE);
+        textViewErrorMessage.setVisibility(View.GONE);
         usersAdapter.setItems(githubUserList);
     }
 
     @Override
     public void showError(String message) {
         Log.d(TAG, "showError() called with: message = [" + message + "]");
+        textViewErrorMessage.setVisibility(View.VISIBLE);
+        recyclerViewUsers.setVisibility(View.GONE);
+        textViewErrorMessage.setText(message);
     }
 
     @Override
     public void showLoading(boolean show) {
-        Log.d(TAG, "showLoading() called with: show = [" + show + "]");
+        if (show) {
+            progressBar.setVisibility(View.VISIBLE);
+            recyclerViewUsers.setVisibility(View.GONE);
+            textViewErrorMessage.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            recyclerViewUsers.setVisibility(View.VISIBLE);
+            textViewErrorMessage.setVisibility(View.GONE);
+        }
     }
 }
