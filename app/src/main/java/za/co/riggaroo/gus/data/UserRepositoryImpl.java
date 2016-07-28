@@ -1,17 +1,16 @@
 package za.co.riggaroo.gus.data;
 
 
+import java.io.IOException;
 import java.util.List;
 
-import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import za.co.riggaroo.gus.data.remote.GithubUserRestService;
 import za.co.riggaroo.gus.data.remote.model.User;
 
 public class UserRepositoryImpl implements UserRepository {
 
-    private static final int SERVICE_UNAVAILABLE = 503;
-    private GithubUserRestService githubUserRestService;
+   private GithubUserRestService githubUserRestService;
 
     public UserRepositoryImpl(GithubUserRestService githubUserRestService) {
         this.githubUserRestService = githubUserRestService;
@@ -23,11 +22,8 @@ public class UserRepositoryImpl implements UserRepository {
                 usersList -> Observable.from(usersList.getItems())
                         .concatMap(user -> githubUserRestService.getUser(user.getLogin())).toList()))
                 .retryWhen(observable -> observable.flatMap(o -> {
-                    if (o instanceof HttpException) {
-                        HttpException httpException = (HttpException) o;
-                        if (httpException.code() == SERVICE_UNAVAILABLE) {
-                            return Observable.just(null);
-                        }
+                    if (o instanceof IOException) {
+                        return Observable.just(null);
                     }
                     return Observable.error(o);
                 }));

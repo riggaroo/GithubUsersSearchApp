@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,10 +98,10 @@ public class UserRepositoryImplTest {
     }
 
     @Test
-    public void searchUsers_503ServiceUnavailableThenSuccess_SearchUsersRetried() {
+    public void searchUsers_IOExceptionThenSuccess_SearchUsersRetried() {
         //Given
         when(githubUserRestService.searchGithubUsers(anyString()))
-                .thenReturn(get503InternalServerError(), Observable.just(githubUserList()));
+                .thenReturn(getIOExceptionError(), Observable.just(githubUserList()));
         when(githubUserRestService.getUser(anyString()))
                 .thenReturn(Observable.just(user1FullDetails()), Observable.just(user2FullDetails()));
 
@@ -119,11 +120,11 @@ public class UserRepositoryImplTest {
     }
 
     @Test
-    public void searchUsers_GetUser503ServiceUnavailableThenSuccess_SearchUsersRetried() {
+    public void searchUsers_GetUserIOExceptionThenSuccess_SearchUsersRetried() {
         //Given
         when(githubUserRestService.searchGithubUsers(anyString())).thenReturn(Observable.just(githubUserList()));
         when(githubUserRestService.getUser(anyString()))
-                .thenReturn(get503InternalServerError(), Observable.just(user1FullDetails()),
+                .thenReturn(getIOExceptionError(), Observable.just(user1FullDetails()),
                         Observable.just(user2FullDetails()));
 
         //When
@@ -160,9 +161,8 @@ public class UserRepositoryImplTest {
     }
 
 
-    private Observable get503InternalServerError() {
-        return Observable.error(new HttpException(
-                Response.error(503, ResponseBody.create(MediaType.parse("application/json"), "Service Unavailable"))));
+    private Observable getIOExceptionError() {
+        return Observable.error(new IOException());
     }
 
     private Observable<UsersList> get403ForbiddenError() {
