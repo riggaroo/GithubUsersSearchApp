@@ -29,6 +29,8 @@ import static org.mockito.Mockito.when;
 
 public class UserRepositoryImplTest {
 
+    private static final String USER_LOGIN_RIGGAROO = "riggaroo";
+    private static final String USER_LOGIN_2_REBECCA = "rebecca";
     @Mock
     GithubUserRestService githubUserRestService;
 
@@ -49,7 +51,7 @@ public class UserRepositoryImplTest {
 
         //When
         TestSubscriber<List<User>> subscriber = new TestSubscriber<>();
-        userRepository.searchUsers("riggaroo").subscribe(subscriber);
+        userRepository.searchUsers(USER_LOGIN_RIGGAROO).subscribe(subscriber);
 
         //Then
         subscriber.awaitTerminalEvent();
@@ -57,19 +59,19 @@ public class UserRepositoryImplTest {
 
         List<List<User>> onNextEvents = subscriber.getOnNextEvents();
         List<User> users = onNextEvents.get(0);
-        Assert.assertEquals("riggaroo", users.get(0).getLogin());
-        Assert.assertEquals("rebecca", users.get(1).getLogin());
-        verify(githubUserRestService).searchGithubUsers("riggaroo");
-        verify(githubUserRestService).getUser("riggaroo");
-        verify(githubUserRestService).getUser("rebecca");
+        Assert.assertEquals(USER_LOGIN_RIGGAROO, users.get(0).getLogin());
+        Assert.assertEquals(USER_LOGIN_2_REBECCA, users.get(1).getLogin());
+        verify(githubUserRestService).searchGithubUsers(USER_LOGIN_RIGGAROO);
+        verify(githubUserRestService).getUser(USER_LOGIN_RIGGAROO);
+        verify(githubUserRestService).getUser(USER_LOGIN_2_REBECCA);
     }
 
     private UsersList githubUserList() {
         User user = new User();
-        user.setLogin("riggaroo");
+        user.setLogin(USER_LOGIN_RIGGAROO);
 
         User user2 = new User();
-        user2.setLogin("rebecca");
+        user2.setLogin(USER_LOGIN_2_REBECCA);
 
         List<User> githubUsers = new ArrayList<>();
         githubUsers.add(user);
@@ -81,7 +83,7 @@ public class UserRepositoryImplTest {
 
     private User user1FullDetails() {
         User user = new User();
-        user.setLogin("riggaroo");
+        user.setLogin(USER_LOGIN_RIGGAROO);
         user.setName("Rigs Franks");
         user.setAvatarUrl("avatar_url");
         user.setBio("Bio1");
@@ -90,7 +92,7 @@ public class UserRepositoryImplTest {
 
     private User user2FullDetails() {
         User user = new User();
-        user.setLogin("rebecca");
+        user.setLogin(USER_LOGIN_2_REBECCA);
         user.setName("Rebecca Franks");
         user.setAvatarUrl("avatar_url2");
         user.setBio("Bio2");
@@ -107,16 +109,16 @@ public class UserRepositoryImplTest {
 
         //When
         TestSubscriber<List<User>> subscriber = new TestSubscriber<>();
-        userRepository.searchUsers("riggaroo").subscribe(subscriber);
+        userRepository.searchUsers(USER_LOGIN_RIGGAROO).subscribe(subscriber);
 
         //Then
         subscriber.awaitTerminalEvent();
         subscriber.assertNoErrors();
 
-        verify(githubUserRestService, times(2)).searchGithubUsers("riggaroo");
+        verify(githubUserRestService, times(2)).searchGithubUsers(USER_LOGIN_RIGGAROO);
 
-        verify(githubUserRestService).getUser("riggaroo");
-        verify(githubUserRestService).getUser("rebecca");
+        verify(githubUserRestService).getUser(USER_LOGIN_RIGGAROO);
+        verify(githubUserRestService).getUser(USER_LOGIN_2_REBECCA);
     }
 
     @Test
@@ -129,16 +131,16 @@ public class UserRepositoryImplTest {
 
         //When
         TestSubscriber<List<User>> subscriber = new TestSubscriber<>();
-        userRepository.searchUsers("riggaroo").subscribe(subscriber);
+        userRepository.searchUsers(USER_LOGIN_RIGGAROO).subscribe(subscriber);
 
         //Then
         subscriber.awaitTerminalEvent();
         subscriber.assertNoErrors();
 
-        verify(githubUserRestService, times(2)).searchGithubUsers("riggaroo");
+        verify(githubUserRestService, times(2)).searchGithubUsers(USER_LOGIN_RIGGAROO);
 
-        verify(githubUserRestService, times(2)).getUser("riggaroo");
-        verify(githubUserRestService).getUser("rebecca");
+        verify(githubUserRestService, times(2)).getUser(USER_LOGIN_RIGGAROO);
+        verify(githubUserRestService).getUser(USER_LOGIN_2_REBECCA);
     }
 
     @Test
@@ -148,16 +150,16 @@ public class UserRepositoryImplTest {
 
         //When
         TestSubscriber<List<User>> subscriber = new TestSubscriber<>();
-        userRepository.searchUsers("riggaroo").subscribe(subscriber);
+        userRepository.searchUsers(USER_LOGIN_RIGGAROO).subscribe(subscriber);
 
         //Then
         subscriber.awaitTerminalEvent();
         subscriber.assertError(HttpException.class);
 
-        verify(githubUserRestService).searchGithubUsers("riggaroo");
+        verify(githubUserRestService).searchGithubUsers(USER_LOGIN_RIGGAROO);
 
-        verify(githubUserRestService, never()).getUser("riggaroo");
-        verify(githubUserRestService, never()).getUser("rebecca");
+        verify(githubUserRestService, never()).getUser(USER_LOGIN_RIGGAROO);
+        verify(githubUserRestService, never()).getUser(USER_LOGIN_2_REBECCA);
     }
 
 
