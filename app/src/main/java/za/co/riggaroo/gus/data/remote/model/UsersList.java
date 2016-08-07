@@ -1,4 +1,3 @@
-
 package za.co.riggaroo.gus.data.remote.model;
 
 import com.google.gson.annotations.Expose;
@@ -19,6 +18,10 @@ public class UsersList {
     @Expose
     private List<User> items = new ArrayList<User>();
 
+    public UsersList(final List<User> githubUsers) {
+        this.items = githubUsers;
+    }
+
     /**
      * @return The totalCount
      */
@@ -26,12 +29,6 @@ public class UsersList {
         return totalCount;
     }
 
-    /**
-     * @param totalCount The total_count
-     */
-    public void setTotalCount(Integer totalCount) {
-        this.totalCount = totalCount;
-    }
 
     /**
      * @return The incompleteResults
@@ -41,24 +38,11 @@ public class UsersList {
     }
 
     /**
-     * @param incompleteResults The incomplete_results
-     */
-    public void setIncompleteResults(Boolean incompleteResults) {
-        this.incompleteResults = incompleteResults;
-    }
-
-    /**
      * @return The items
      */
     public List<User> getItems() {
         return items;
     }
 
-    /**
-     * @param items The items
-     */
-    public void setItems(List<User> items) {
-        this.items = items;
-    }
 
 }
