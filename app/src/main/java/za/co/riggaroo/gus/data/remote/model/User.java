@@ -1,4 +1,3 @@
-
 package za.co.riggaroo.gus.data.remote.model;
 
 import com.google.gson.annotations.Expose;
@@ -97,18 +96,25 @@ public class User {
     @Expose
     private String updatedAt;
 
+    public User() {
+    }
+
+    public User(final String userLogin, final String name, final String avatarUrl, final String bio) {
+        this.login = userLogin;
+        this.name = name;
+        this.avatarUrl = avatarUrl;
+        this.bio = bio;
+    }
+
+    public User(final String userLogin) {
+        this.login = userLogin;
+    }
+
     /**
      * @return The login
      */
     public String getLogin() {
         return login;
-    }
-
-    /**
-     * @param login The login
-     */
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     /**
@@ -118,21 +124,9 @@ public class User {
         return id;
     }
 
-    /**
-     * @param id The id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
 
     public String getAvatarUrl() {
         return avatarUrl;
-    }
-
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
     }
 
 
@@ -141,18 +135,8 @@ public class User {
     }
 
 
-    public void setGravatarId(String gravatarId) {
-        this.gravatarId = gravatarId;
-    }
-
-
     public String getUrl() {
         return url;
-    }
-
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
 
@@ -161,18 +145,8 @@ public class User {
     }
 
 
-    public void setHtmlUrl(String htmlUrl) {
-        this.htmlUrl = htmlUrl;
-    }
-
-
     public String getFollowersUrl() {
         return followersUrl;
-    }
-
-
-    public void setFollowersUrl(String followersUrl) {
-        this.followersUrl = followersUrl;
     }
 
 
@@ -181,18 +155,8 @@ public class User {
     }
 
 
-    public void setFollowingUrl(String followingUrl) {
-        this.followingUrl = followingUrl;
-    }
-
-
     public String getGistsUrl() {
         return gistsUrl;
-    }
-
-
-    public void setGistsUrl(String gistsUrl) {
-        this.gistsUrl = gistsUrl;
     }
 
 
@@ -201,18 +165,8 @@ public class User {
     }
 
 
-    public void setStarredUrl(String starredUrl) {
-        this.starredUrl = starredUrl;
-    }
-
-
     public String getSubscriptionsUrl() {
         return subscriptionsUrl;
-    }
-
-
-    public void setSubscriptionsUrl(String subscriptionsUrl) {
-        this.subscriptionsUrl = subscriptionsUrl;
     }
 
 
@@ -221,34 +175,17 @@ public class User {
     }
 
 
-    public void setOrganizationsUrl(String organizationsUrl) {
-        this.organizationsUrl = organizationsUrl;
-    }
-
-
     public String getReposUrl() {
         return reposUrl;
     }
 
 
-    public void setReposUrl(String reposUrl) {
-        this.reposUrl = reposUrl;
-    }
-
     public String getEventsUrl() {
         return eventsUrl;
     }
 
-    public void setEventsUrl(String eventsUrl) {
-        this.eventsUrl = eventsUrl;
-    }
-
     public String getReceivedEventsUrl() {
         return receivedEventsUrl;
-    }
-
-    public void setReceivedEventsUrl(String receivedEventsUrl) {
-        this.receivedEventsUrl = receivedEventsUrl;
     }
 
 
@@ -256,122 +193,63 @@ public class User {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public Boolean getSiteAdmin() {
         return siteAdmin;
-    }
-
-    public void setSiteAdmin(Boolean siteAdmin) {
-        this.siteAdmin = siteAdmin;
     }
 
     public String getName() {
         return name;
     }
 
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Object getCompany() {
         return company;
-    }
-
-    public void setCompany(Object company) {
-        this.company = company;
     }
 
     public String getBlog() {
         return blog;
     }
 
-    public void setBlog(String blog) {
-        this.blog = blog;
-    }
-
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
     public Object getEmail() {
         return email;
-    }
-
-    public void setEmail(Object email) {
-        this.email = email;
     }
 
     public Object getHireable() {
         return hireable;
     }
 
-    public void setHireable(Object hireable) {
-        this.hireable = hireable;
-    }
-
     public String getBio() {
         return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
     }
 
     public Integer getPublicRepos() {
         return publicRepos;
     }
 
-    public void setPublicRepos(Integer publicRepos) {
-        this.publicRepos = publicRepos;
-    }
-
     public Integer getPublicGists() {
         return publicGists;
-    }
-
-    public void setPublicGists(Integer publicGists) {
-        this.publicGists = publicGists;
     }
 
     public Integer getFollowers() {
         return followers;
     }
 
-    public void setFollowers(Integer followers) {
-        this.followers = followers;
-    }
-
     public Integer getFollowing() {
         return following;
-    }
-
-    public void setFollowing(Integer following) {
-        this.following = following;
     }
 
     public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
 }
 

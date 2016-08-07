@@ -67,35 +67,24 @@ public class UserRepositoryImplTest {
     }
 
     private UsersList githubUserList() {
-        User user = new User();
-        user.setLogin(USER_LOGIN_RIGGAROO);
+        User user = new User(USER_LOGIN_RIGGAROO);
 
-        User user2 = new User();
-        user2.setLogin(USER_LOGIN_2_REBECCA);
+        User user2 = new User(USER_LOGIN_2_REBECCA);
 
         List<User> githubUsers = new ArrayList<>();
         githubUsers.add(user);
         githubUsers.add(user2);
-        UsersList usersList = new UsersList();
-        usersList.setItems(githubUsers);
+        UsersList usersList = new UsersList(githubUsers);
         return usersList;
     }
 
     private User user1FullDetails() {
-        User user = new User();
-        user.setLogin(USER_LOGIN_RIGGAROO);
-        user.setName("Rigs Franks");
-        user.setAvatarUrl("avatar_url");
-        user.setBio("Bio1");
+        User user = new User(USER_LOGIN_RIGGAROO, "Rigs Franks", "avatar_url", "Bio1");
         return user;
     }
 
     private User user2FullDetails() {
-        User user = new User();
-        user.setLogin(USER_LOGIN_2_REBECCA);
-        user.setName("Rebecca Franks");
-        user.setAvatarUrl("avatar_url2");
-        user.setBio("Bio2");
+        User user = new User(USER_LOGIN_2_REBECCA, "Rebecca Franks", "avatar_url2", "Bio2");
         return user;
     }
 
