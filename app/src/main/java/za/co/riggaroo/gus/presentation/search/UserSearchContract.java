@@ -10,7 +10,7 @@ import za.co.riggaroo.gus.presentation.base.MvpView;
 interface UserSearchContract {
 
     interface View extends MvpView {
-        void onSearchResultsLoaded(List<User> githubUserList);
+        void showSearchResults(List<User> githubUserList);
 
         void showError(String message);
 

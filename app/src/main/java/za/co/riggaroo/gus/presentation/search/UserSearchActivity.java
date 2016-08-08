@@ -91,7 +91,7 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
     }
 
     @Override
-    public void onSearchResultsLoaded(List<User> githubUserList) {
+    public void showSearchResults(List<User> githubUserList) {
         recyclerViewUsers.setVisibility(View.VISIBLE);
         textViewErrorMessage.setVisibility(View.GONE);
         usersAdapter.setItems(githubUserList);
