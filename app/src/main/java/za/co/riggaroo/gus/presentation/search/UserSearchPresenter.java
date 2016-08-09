@@ -21,6 +21,7 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
 
     @Override
     public void search(String term) {
+        checkViewAttached();
         getView().showLoading(true);
         addSubscription(userRepository.searchUsers(term).subscribeOn(ioScheduler).observeOn(mainScheduler).subscribe(new Subscriber<List<User>>() {
             @Override
@@ -38,7 +39,7 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
             public void onNext(List<User> users) {
                 getView().showLoading(false);
 
-                getView().onSearchResultsLoaded(users);
+                getView().showSearchResults(users);
             }
         }));
     }

@@ -30,11 +30,11 @@ public class BasePresenter<T extends MvpView> implements MvpPresenter<T> {
         }
     }
 
-    public boolean isViewAttached() {
+    private boolean isViewAttached() {
         return view != null;
     }
 
-    public void addSubscription(Subscription subscription) {
+    protected void addSubscription(Subscription subscription) {
         this.compositeSubscription.add(subscription);
     }
 
