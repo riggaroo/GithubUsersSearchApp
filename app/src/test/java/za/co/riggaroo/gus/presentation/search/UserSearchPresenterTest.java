@@ -5,10 +5,10 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 import za.co.riggaroo.gus.data.UserRepository;
@@ -16,7 +16,6 @@ import za.co.riggaroo.gus.data.remote.model.User;
 import za.co.riggaroo.gus.data.remote.model.UsersList;
 import za.co.riggaroo.gus.presentation.base.BasePresenter;
 
-import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
@@ -43,30 +42,31 @@ public class UserSearchPresenterTest {
 
     @Test
     public void search_ValidSearchTerm_ReturnsResults() {
-        UsersList userList = getFakeUserList();
+        UsersList userList = getDummyUserList();
         when(userRepository.searchUsers(anyString())).thenReturn(Observable.<List<User>>just(userList.getItems()));
 
         userSearchPresenter.search("riggaroo");
 
-        verify(view).showLoading(true);
-        verify(view).showLoading(false);
+        verify(view).showLoading();
+        verify(view).hideLoading();
         verify(view).showSearchResults(userList.getItems());
         verify(view, never()).showError(anyString());
     }
 
     @Test
     public void search_UserRepositoryError_ErrorMsg() {
-        when(userRepository.searchUsers(anyString())).thenReturn(Observable.error(new Exception("Sorry.")));
+        String errorMsg = "No internet";
+        when(userRepository.searchUsers(anyString())).thenReturn(Observable.error(new IOException(errorMsg)));
 
-        userSearchPresenter.search(anyString());
+        userSearchPresenter.search("bookdash");
 
-        verify(view).showLoading(true);
-        verify(view).showLoading(false);
+        verify(view).showLoading();
+        verify(view).hideLoading();
         verify(view, never()).showSearchResults(anyList());
-        verify(view).showError("Sorry.");
+        verify(view).showError(errorMsg);
     }
 
-    UsersList getFakeUserList() {
+    UsersList getDummyUserList() {
         List<User> githubUsers = new ArrayList<>();
         githubUsers.add(user1FullDetails());
         githubUsers.add(user2FullDetails());
@@ -82,12 +82,12 @@ public class UserSearchPresenterTest {
     }
 
     @Test(expected = BasePresenter.MvpViewNotAttachedException.class)
-    public void search_NotAttached_ThrowsMvpException(){
+    public void search_NotAttached_ThrowsMvpException() {
         userSearchPresenter.detachView();
 
         userSearchPresenter.search("test");
 
-        verify(view, never()).showLoading(anyBoolean());
+        verify(view, never()).showLoading();
         verify(view, never()).showSearchResults(anyList());
     }
 
