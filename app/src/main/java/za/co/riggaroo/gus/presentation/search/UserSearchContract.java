@@ -14,7 +14,9 @@ interface UserSearchContract {
 
         void showError(String message);
 
-        void showLoading(boolean show);
+        void showLoading();
+
+        void hideLoading();
     }
 
     interface Presenter extends MvpPresenter<View> {

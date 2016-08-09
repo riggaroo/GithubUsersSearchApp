@@ -39,7 +39,8 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
         setContentView(R.layout.activity_user_search);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        userSearchPresenter = new UserSearchPresenter(Injection.provideUserRepo(), Schedulers.io(), AndroidSchedulers.mainThread());
+        userSearchPresenter = new UserSearchPresenter(Injection.provideUserRepo(), Schedulers.io(),
+                AndroidSchedulers.mainThread());
         userSearchPresenter.attachView(this);
 
         recyclerViewUsers = (RecyclerView) findViewById(R.id.recycler_view_users);
@@ -106,15 +107,17 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
     }
 
     @Override
-    public void showLoading(boolean show) {
-        if (show) {
-            progressBar.setVisibility(View.VISIBLE);
-            recyclerViewUsers.setVisibility(View.GONE);
-            textViewErrorMessage.setVisibility(View.GONE);
-        } else {
-            progressBar.setVisibility(View.GONE);
-            recyclerViewUsers.setVisibility(View.VISIBLE);
-            textViewErrorMessage.setVisibility(View.GONE);
-        }
+    public void showLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerViewUsers.setVisibility(View.GONE);
+        textViewErrorMessage.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideLoading() {
+        progressBar.setVisibility(View.GONE);
+        recyclerViewUsers.setVisibility(View.VISIBLE);
+        textViewErrorMessage.setVisibility(View.GONE);
+
     }
 }
