@@ -42,6 +42,4 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
             }
         }));
     }
-
-
 }
