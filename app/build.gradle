@@ -44,7 +44,7 @@ dependencies {
 
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.0-RC1'
     compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
 
     //Retrofit, RxJava and OkHttp.
     compile 'com.squareup.retrofit2:retrofit:2.1.0'

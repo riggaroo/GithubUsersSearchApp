@@ -2,11 +2,9 @@ package za.co.riggaroo.gus.presentation.search;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,16 +35,17 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_search);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         userSearchPresenter = new UserSearchPresenter(Injection.provideUserRepo(), Schedulers.io(),
                 AndroidSchedulers.mainThread());
         userSearchPresenter.attachView(this);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         recyclerViewUsers = (RecyclerView) findViewById(R.id.recycler_view_users);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerViewUsers.setLayoutManager(manager);
+        // LinearLayoutManager manager = new LinearLayoutManager(this);
+        //manager.setOrientation(LinearLayoutManager.VERTICAL);
+        //recyclerViewUsers.setLayoutManager(manager);
         usersAdapter = new UsersAdapter(null, this);
         recyclerViewUsers.setAdapter(usersAdapter);
 
@@ -63,7 +62,7 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_user_search, menu);
         final MenuItem myActionMenuItem = menu.findItem(R.id.menu_search);
         searchView = (SearchView) myActionMenuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -100,7 +99,6 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
 
     @Override
     public void showError(String message) {
-        Log.d(TAG, "showError() called with: message = [" + message + "]");
         textViewErrorMessage.setVisibility(View.VISIBLE);
         recyclerViewUsers.setVisibility(View.GONE);
         textViewErrorMessage.setText(message);
