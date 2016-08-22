@@ -13,7 +13,7 @@ class UserViewHolder extends RecyclerView.ViewHolder {
     final TextView textViewName;
     final ImageView imageViewAvatar;
 
-    UserViewHolder(View v) {
+    UserViewHolder(View v ) {
         super(v);
         imageViewAvatar = (ImageView) v.findViewById(R.id.imageview_userprofilepic);
         textViewName = (TextView) v.findViewById(R.id.textview_username);

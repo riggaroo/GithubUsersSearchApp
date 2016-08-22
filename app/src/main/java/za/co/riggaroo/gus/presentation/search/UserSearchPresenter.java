@@ -23,23 +23,25 @@ class UserSearchPresenter extends BasePresenter<UserSearchContract.View> impleme
     public void search(String term) {
         checkViewAttached();
         getView().showLoading();
-        addSubscription(userRepository.searchUsers(term).subscribeOn(ioScheduler).observeOn(mainScheduler).subscribe(new Subscriber<List<User>>() {
-            @Override
-            public void onCompleted() {
+        addSubscription(userRepository.searchUsers(term).subscribeOn(ioScheduler).observeOn(mainScheduler)
+                .subscribe(new Subscriber<List<User>>() {
+                    @Override
+                    public void onCompleted() {
 
-            }
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                getView().hideLoading();
-                getView().showError(e.getMessage()); //TODO You probably don't want this error to show to users - Might want to show a friendlier message :)
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().hideLoading();
+                        getView().showError(
+                                e.getMessage()); //TODO You probably don't want this error to show to users - Might want to show a friendlier message :)
+                    }
 
-            @Override
-            public void onNext(List<User> users) {
-                getView().hideLoading();
-                getView().showSearchResults(users);
-            }
-        }));
+                    @Override
+                    public void onNext(List<User> users) {
+                        getView().hideLoading();
+                        getView().showSearchResults(users);
+                    }
+                }));
     }
 }

@@ -22,7 +22,6 @@ import za.co.riggaroo.gus.injection.Injection;
 
 public class UserSearchActivity extends AppCompatActivity implements UserSearchContract.View {
 
-    private static final String TAG = "UserSearchActi";
     private UserSearchContract.Presenter userSearchPresenter;
     private UsersAdapter usersAdapter;
     private SearchView searchView;
@@ -41,16 +40,12 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        textViewErrorMessage = (TextView) findViewById(R.id.text_view_error_msg);
         recyclerViewUsers = (RecyclerView) findViewById(R.id.recycler_view_users);
-        // LinearLayoutManager manager = new LinearLayoutManager(this);
-        //manager.setOrientation(LinearLayoutManager.VERTICAL);
-        //recyclerViewUsers.setLayoutManager(manager);
         usersAdapter = new UsersAdapter(null, this);
         recyclerViewUsers.setAdapter(usersAdapter);
 
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        textViewErrorMessage = (TextView) findViewById(R.id.text_view_error_msg);
     }
 
     @Override
@@ -63,8 +58,8 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_user_search, menu);
-        final MenuItem myActionMenuItem = menu.findItem(R.id.menu_search);
-        searchView = (SearchView) myActionMenuItem.getActionView();
+        final MenuItem searchActionMenuItem = menu.findItem(R.id.menu_search);
+        searchView = (SearchView) searchActionMenuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -73,7 +68,7 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
                 }
                 userSearchPresenter.search(query);
                 toolbar.setTitle(query);
-                myActionMenuItem.collapseActionView();
+                searchActionMenuItem.collapseActionView();
                 return false;
             }
 
@@ -82,12 +77,8 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
                 return false;
             }
         });
+        searchActionMenuItem.expandActionView();
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
