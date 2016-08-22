@@ -23,10 +23,8 @@ class UsersAdapter extends RecyclerView.Adapter<UserViewHolder> {
     }
 
     @Override
-    public UserViewHolder onCreateViewHolder(ViewGroup parent,
-                                             int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_users, parent, false);
+    public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_user, parent, false);
         return new UserViewHolder(v);
     }
 
@@ -39,7 +37,6 @@ class UsersAdapter extends RecyclerView.Adapter<UserViewHolder> {
             holder.textViewName.setText(item.getLogin() + " - " + item.getName());
         } else {
             holder.textViewName.setText(item.getLogin());
-
         }
         Picasso.with(context).load(item.getAvatarUrl()).into(holder.imageViewAvatar);
     }

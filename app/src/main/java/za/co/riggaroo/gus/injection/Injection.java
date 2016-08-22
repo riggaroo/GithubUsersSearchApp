@@ -17,22 +17,19 @@ public class Injection {
     private static GithubUserRestService userRestService;
     private static Retrofit retrofitInstance;
 
-    public static void init() {
-
-    }
 
     public static UserRepository provideUserRepo() {
         return new UserRepositoryImpl(provideGithubUserRestService());
     }
 
-    public static GithubUserRestService provideGithubUserRestService() {
+    static GithubUserRestService provideGithubUserRestService() {
         if (userRestService == null) {
             userRestService = getRetrofitInstance().create(GithubUserRestService.class);
         }
         return userRestService;
     }
 
-    public static OkHttpClient getOkHttpClient() {
+    static OkHttpClient getOkHttpClient() {
         if (okHttpClient == null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
@@ -42,11 +39,9 @@ public class Injection {
         return okHttpClient;
     }
 
-    public static Retrofit getRetrofitInstance() {
+    static Retrofit getRetrofitInstance() {
         if (retrofitInstance == null) {
-            Retrofit.Builder retrofit = new Retrofit.Builder()
-                    .client(Injection.getOkHttpClient())
-                    .baseUrl(BASE_URL)
+            Retrofit.Builder retrofit = new Retrofit.Builder().client(Injection.getOkHttpClient()).baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
             retrofitInstance = retrofit.build();

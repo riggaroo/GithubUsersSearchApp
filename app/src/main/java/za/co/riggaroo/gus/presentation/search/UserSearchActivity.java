@@ -2,11 +2,9 @@ package za.co.riggaroo.gus.presentation.search;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +22,6 @@ import za.co.riggaroo.gus.injection.Injection;
 
 public class UserSearchActivity extends AppCompatActivity implements UserSearchContract.View {
 
-    private static final String TAG = "UserSearchActi";
     private UserSearchContract.Presenter userSearchPresenter;
     private UsersAdapter usersAdapter;
     private SearchView searchView;
@@ -37,21 +34,18 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_search);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         userSearchPresenter = new UserSearchPresenter(Injection.provideUserRepo(), Schedulers.io(),
                 AndroidSchedulers.mainThread());
         userSearchPresenter.attachView(this);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        textViewErrorMessage = (TextView) findViewById(R.id.text_view_error_msg);
         recyclerViewUsers = (RecyclerView) findViewById(R.id.recycler_view_users);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerViewUsers.setLayoutManager(manager);
         usersAdapter = new UsersAdapter(null, this);
         recyclerViewUsers.setAdapter(usersAdapter);
 
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        textViewErrorMessage = (TextView) findViewById(R.id.text_view_error_msg);
     }
 
     @Override
@@ -63,9 +57,9 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        final MenuItem myActionMenuItem = menu.findItem(R.id.menu_search);
-        searchView = (SearchView) myActionMenuItem.getActionView();
+        getMenuInflater().inflate(R.menu.menu_user_search, menu);
+        final MenuItem searchActionMenuItem = menu.findItem(R.id.menu_search);
+        searchView = (SearchView) searchActionMenuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -74,7 +68,7 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
                 }
                 userSearchPresenter.search(query);
                 toolbar.setTitle(query);
-                myActionMenuItem.collapseActionView();
+                searchActionMenuItem.collapseActionView();
                 return false;
             }
 
@@ -83,12 +77,8 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
                 return false;
             }
         });
+        searchActionMenuItem.expandActionView();
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -100,7 +90,6 @@ public class UserSearchActivity extends AppCompatActivity implements UserSearchC
 
     @Override
     public void showError(String message) {
-        Log.d(TAG, "showError() called with: message = [" + message + "]");
         textViewErrorMessage.setVisibility(View.VISIBLE);
         recyclerViewUsers.setVisibility(View.GONE);
         textViewErrorMessage.setText(message);
