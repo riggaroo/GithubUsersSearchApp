@@ -29,15 +29,10 @@ public class UserSearchActivityTest {
     @Rule
     public ActivityTestRule<UserSearchActivity> testRule = new ActivityTestRule<>(UserSearchActivity.class);
 
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
     @Test
     public void searchActivity_onLaunch_HintTextDisplayed(){
         //Given activity automatically launched
-
+        //When user doesn't interact with the view
         //Then
         onView(withText("Start typing to search")).check(matches(isDisplayed()));
     }
