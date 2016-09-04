@@ -23,8 +23,17 @@ public class MockGithubUserRestServiceImpl implements GithubUserRestService {
         usersList.add(fakeUser2);
     }
 
+    private static Observable dummyGithubSearchResult = null;
+
+    public static void setDummySearchGithubCallResult(Observable result) {
+        dummyGithubSearchResult = result;
+    }
+
     @Override
     public Observable<UsersList> searchGithubUsers(@Query("q") final String searchTerm) {
+        if (dummyGithubSearchResult != null) {
+            return dummyGithubSearchResult;
+        }
         return Observable.just(new UsersList(usersList));
     }
 
@@ -37,4 +46,6 @@ public class MockGithubUserRestServiceImpl implements GithubUserRestService {
         }
         return Observable.just(null);
     }
+
+
 }
