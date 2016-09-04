@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         applicationId "za.co.riggaroo.gus"
@@ -21,6 +21,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            testCoverageEnabled = true
+        }
     }
 
 
@@ -30,7 +33,6 @@ android {
 
         }
         mock {
-            applicationId "za.co.riggaroo.gus.mock"
         }
     }
     compileOptions {
@@ -43,7 +45,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.0-RC1'
-    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
 
     //Retrofit, RxJava and OkHttp.
@@ -64,7 +66,7 @@ dependencies {
     testCompile 'com.squareup.okhttp3:mockwebserver:3.4.0-RC1'
 
     //Dependencies for Espresso
-    androidTestCompile 'com.android.support:appcompat-v7:24.1.1'
+    androidTestCompile 'com.android.support:appcompat-v7:24.2.0'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -89,5 +91,5 @@ dependencies {
     }
 
 
-    compile 'com.android.support:recyclerview-v7:24.1.1'
+    compile 'com.android.support:recyclerview-v7:24.2.0'
 }
