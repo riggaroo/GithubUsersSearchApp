@@ -30,7 +30,7 @@ public class MockGithubUserRestServiceImpl implements GithubUserRestService {
     }
 
     @Override
-    public Observable<UsersList> searchGithubUsers(@Query("q") final String searchTerm) {
+    public Observable<UsersList> searchGithubUsers(final String searchTerm) {
         if (dummyGithubSearchResult != null) {
             return dummyGithubSearchResult;
         }
@@ -38,7 +38,7 @@ public class MockGithubUserRestServiceImpl implements GithubUserRestService {
     }
 
     @Override
-    public Observable<User> getUser(@Path("username") final String username) {
+    public Observable<User> getUser(final String username) {
         if (username.equals("riggaroo")) {
             return Observable.just(dummyUser1);
         } else if (username.equals("riggaroo2")) {
